@@ -1,8 +1,11 @@
+import requests
 from django.shortcuts import render
 from rest_framework import viewsets, status
 from rest_framework.response import Response
 from rest_framework.permissions import IsAuthenticated, AllowAny
 from rest_framework.decorators import action
+from rest_framework.decorators import api_view, permission_classes
+
 
 from .models import Usuario, TipoPokemon, PokemonUsuario
 from .serializers import UsuarioSerializer, TipoPokemonSerializer, PokemonUsuarioSerializer
@@ -42,3 +45,20 @@ class PokemonUsuarioViewSet(viewsets.ModelViewSet):
     
     def perform_create(self, serializer):
         serializer.save(usuario=self.request.user)
+        
+@api_view(['GET'])
+@permission_classes([IsAuthenticated])
+def public_pokemon_list(request):
+    pokeapi_url = 'https://pokeapi.co/api/v2/pokemon'
+    params = {
+        'limit': request.query_params.get('limit', 20),
+        'offset': request.query_params.get('offset', 0)
+    }
+    
+    try:
+        response = requests.get(pokeapi_url, params=params)
+        response.raise_for_status()
+        data = response.json()
+        return Response(data)
+    except requests.exceptions.RequestException as e:
+        return Response({'error': str(e)}, status=status.HTTP_500_INTERNAL_SERVER_ERROR)

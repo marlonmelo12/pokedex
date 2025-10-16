@@ -10,4 +10,5 @@ router.register(r'pokemons', PokemonUsuarioViewSet, basename='pokemonusuario')
 
 urlpatterns = [
     path('', include(router.urls)),
+    path('public/pokemons/', public_pokemon_list, name='public-pokemon-list'),
 ]
