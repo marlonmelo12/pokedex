@@ -1,20 +1,9 @@
 venv/
-env/
-.env
+
+db.sqlite3
 
 __pycache__/
 *.pyc
-*.pyo
-*.pyd
-
-db.sqlite3
-*.sqlite3
 
 .vscode/
 .idea/
-*.swp
-
-*.log
-media/
-
-staticfiles/
