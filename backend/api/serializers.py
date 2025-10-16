@@ -19,7 +19,8 @@ class UsuarioSerializer(serializers.ModelSerializer):
     
     class Meta:
         model = Usuario
-        fields = ['id', 'username', 'email', 'dt_inclusao', 'dt_alteracao', 'pokemons']
+        fields = ['id', 'username', 'email','password', 'pokemons']
+        read_only_fields = ['dt_inclusao', 'dt_alteracao']
         extra_kwargs = {
             'password': {'write_only': True}
         }

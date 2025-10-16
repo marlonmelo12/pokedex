@@ -12,7 +12,7 @@ class UsuarioViewSet(viewsets.ModelViewSet):
     serializer_class = UsuarioSerializer
     
     def get_permissions(self):
-        if self.action == 'create':
+        if self.action == 'registrar':
             permission_classes = [AllowAny]
         else:
             permission_classes = [IsAuthenticated]
