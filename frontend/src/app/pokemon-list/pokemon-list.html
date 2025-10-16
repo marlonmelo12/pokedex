@@ -1,0 +1,21 @@
+<app-header></app-header>
+
+<main class="min-h-screen bg-gray-100">
+  
+  <div class="container mx-auto p-6">
+    <h2 class="text-2xl font-bold mb-4">Pokémon Descobertos</h2>
+    
+    <div class="flex gap-2 mb-6">
+      <button class="px-4 py-2 text-sm font-semibold text-white bg-orange-500 rounded-full">Todos os Tipos</button>
+      <button class="px-4 py-2 text-sm font-semibold text-gray-700 bg-white rounded-full border">Fogo</button>
+      <button class="px-4 py-2 text-sm font-semibold text-gray-700 bg-white rounded-full border">Água</button>
+      <button class="px-4 py-2 text-sm font-semibold text-gray-700 bg-white rounded-full border">Grama</button>
+    </div>
+
+    <div class="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-6">
+      <div *ngFor="let p of pokemons">
+        <app-pokemon-card [pokemon]="p"></app-pokemon-card>
+      </div>
+    </div>
+  </div>
+</main>
