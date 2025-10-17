@@ -1,1 +1,42 @@
-<p>header works!</p>
+<header>
+    <div class="bg-orange-500 text-white p-8">
+        <div class="container mx-auto">
+
+            <div class="flex items-center gap-6">
+
+                <div
+                    class="w-16 h-16 flex-shrink-0 flex items-center justify-center border-[12px] border-white rounded-full">
+                </div>
+
+                <h1 class="text-4xl font-bold">Pokédex Digital</h1>
+            </div>
+
+            <p class="text-orange-100 mt-4">
+                Explore o mundo dos Pokémon com nossa Pokédex interativa. Descubra informações detalhadas sobre cada
+                criatura.
+            </p>
+
+        </div>
+    </div>
+
+    <div class="bg-indigo-600 text-white py-4">
+        <div class="container mx-auto flex justify-start items-center gap-x-16">
+
+            <div class="text-center">
+                <p class="text-3xl font-bold">{{ pokemonCount }}</p>
+                <p class="text-sm text-indigo-200">Pokémon</p>
+            </div>
+
+            <div class="text-center">
+                <p class="text-3xl font-bold">{{ typeCount }}</p>
+                <p class="text-sm text-indigo-200">Tipos</p>
+            </div>
+
+            <div class="text-center">
+                <p class="text-3xl font-bold">{{ generationCount }}</p>
+                <p class="text-sm text-indigo-200">Gerações</p>
+            </div>
+
+        </div>
+    </div>
+</header>

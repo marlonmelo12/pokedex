@@ -1,9 +1,15 @@
 <div class="bg-white rounded-2xl shadow-lg p-6 flex flex-col items-center transition-transform duration-300 hover:scale-105">
   
   <div class="w-full flex justify-between items-center mb-2">
-    <span class="text-gray-500 font-bold">#{{ pokemon.id.toString().padStart(3, '0') }}</span>
+    <span class="text-gray-500 font-bold">#{{ pokemon.codigo }}</span>
     <div class="flex gap-2">
-      <span *ngFor="let type of pokemon.types" class="px-2 py-1 text-xs text-white bg-green-500 rounded-full">{{ type }}</span>
+      @for (type of pokemon.types; track type.descricao) {
+        <span 
+          [ngClass]="'bg-' + (typeColorMap[type.descricao] || 'gray') + '-500'"
+          class="px-2 py-1 text-xs text-white rounded-full">
+          {{ type.descricao }}
+        </span>
+      }
     </div>
   </div>
 
@@ -14,12 +20,14 @@
   <h3 class="text-2xl font-bold mb-4">{{ pokemon.name }}</h3>
 
   <div class="w-full text-sm space-y-2">
-    <div *ngFor="let stat of [['HP', pokemon.stats.hp], ['Ataque', pokemon.stats.attack], ['Defesa', pokemon.stats.defense]]" class="flex items-center gap-2">
-      <span class="w-16 font-semibold">{{ stat[0] }}</span>
-      <span class="w-8 text-right font-bold">{{ stat[1] }}</span>
-      <div class="flex-1 bg-gray-200 rounded-full h-2">
-        <div class="bg-green-500 h-2 rounded-full" [style.width.%]="stat[1]"></div>
+    @for (stat of [['HP', pokemon.stats.hp], ['Ataque', pokemon.stats.attack], ['Defesa', pokemon.stats.defense]]; track stat[0]) {
+      <div class="flex items-center gap-2">
+        <span class="w-16 font-semibold">{{ stat[0] }}</span>
+        <span class="w-8 text-right font-bold">{{ stat[1] }}</span>
+        <div class="flex-1 bg-gray-200 rounded-full h-2">
+          <div class="bg-green-500 h-2 rounded-full" [style.width.%]="stat[1]"></div>
+        </div>
       </div>
-    </div>
+    }
   </div>
 </div>

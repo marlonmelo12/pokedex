@@ -1,36 +1,43 @@
-import { Injectable } from "@angular/core";
-import { HttpClient } from "@angular/common/http";
-import { Observable } from "rxjs";
-import { Pokemon } from "../../core/models/pokemon.model";
-import { __param } from "tslib";
+import { Injectable } from '@angular/core';
+import { HttpClient } from '@angular/common/http';
+import { Observable } from 'rxjs';
+import { Pokemon, PaginatedPokemonResponse } from '../../core/models/pokemon.model';
 
 @Injectable({
-    providedIn: 'root'
+  providedIn: 'root'
 })
 export class PokemonService {
-    private backendUrl = 'http://localhost:8080/api';
+  [x: string]: any;
+  private backendApiUrl = 'http://localhost:8000/api';
 
-    private pokeApiUrl = 'https://pokeapi.co/api/v2';
+  constructor(private http: HttpClient) { }
 
-    constructor(private http: HttpClient) {}
+  getPublicPokemonList(limit: number = 20, offset: number = 0): Observable<PaginatedPokemonResponse> {
+    const url = `${this.backendApiUrl}/public/pokemons/`;
+    const params = {
+      limit: limit.toString(),
+      offset: offset.toString()
+    };
+    return this.http.get<PaginatedPokemonResponse>(url, { params });
+  }
 
-    getPokemonsFromPokeApi(limit: number = 20, offset: number = 0): Observable<any> {
-        const url = `${this.pokeApiUrl}/pokemon?limit=${limit}&offset=${offset}`;
-        return this.http.get<any>(url);
-    }
+  getMyPokemons(): Observable<Pokemon[]> {
+    const url = `${this.backendApiUrl}/pokemons/`;
+    return this.http.get<Pokemon[]>(url);
+  }
 
-    getPokemonDetailsFromPokeApi(name: string): Observable<any> {
-        const url = `${this.pokeApiUrl}/pokemon/${name}`;
-        return this.http.get<any>(url);
-    }
+  addPokemonToMyList(pokemonData: Partial<Pokemon>): Observable<Pokemon> {
+    const url = `${this.backendApiUrl}/pokemons/`;
+    return this.http.post<Pokemon>(url, pokemonData);
+  }
 
-    getMyPokemons(): Observable<Pokemon[]> {
-        const url = `${this.backendUrl}/pokemons`;
-        return this.http.get<Pokemon[]>(url);
-    }
+  updateMyPokemon(pokemonId: number, updates: Partial<Pokemon>): Observable<Pokemon> {
+    const url = `${this.backendApiUrl}/pokemons/${pokemonId}/`;
+    return this.http.patch<Pokemon>(url, updates);
+  }
 
-    addPokemonToMyList(pokemonData: any): Observable<Pokemon> {
-        const url = `${this.backendUrl}/pokemons`;
-        return this.http.post<Pokemon>(url, pokemonData);
-    }
+  deleteMyPokemon(pokemonId: number): Observable<void> {
+    const url = `${this.backendApiUrl}/pokemons/${pokemonId}/`;
+    return this.http.delete<void>(url);
+  }
 }

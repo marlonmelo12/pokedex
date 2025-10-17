@@ -1,0 +1,9 @@
+<div class="flex flex-wrap gap-3 mb-4">
+  @for (option of filterOptions; track option) {
+    <button
+      [ngClass]="getButtonClasses(option)"
+      (click)="onSelectFilter(option)">
+      {{ option }}
+    </button>
+  }
+</div>
