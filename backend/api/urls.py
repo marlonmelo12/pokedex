@@ -1,6 +1,6 @@
 from django.urls import path, include
 from rest_framework.routers import DefaultRouter
-from .views import UsuarioViewSet, TipoPokemonViewSet, PokemonUsuarioViewSet
+from .views import UsuarioViewSet, TipoPokemonViewSet, PokemonUsuarioViewSet, public_pokemon_list
 
 router = DefaultRouter()
 

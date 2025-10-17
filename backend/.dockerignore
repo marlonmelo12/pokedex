@@ -1,0 +1,16 @@
+# .dockerignore
+
+# Ignora a pasta do ambiente virtual
+venv/
+
+# Ignora o banco de dados local (não deve ir para a imagem)
+db.sqlite3
+*.sqlite3-journal
+
+# Ignora caches do Python
+__pycache__/
+*.pyc
+
+# Ignora arquivos de configuração de IDEs
+.vscode/
+.idea/
