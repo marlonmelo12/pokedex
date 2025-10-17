@@ -40,4 +40,13 @@ export class PokemonService {
     const url = `${this.backendApiUrl}/pokemons/${pokemonId}/`;
     return this.http.delete<void>(url);
   }
+
+  getOrToggleFavorite(pokemon: Pokemon): Observable<Pokemon>{
+    const url = `${this.backendApiUrl}/pokemons/get_or_toggle_favorite/`
+    return this.http.post<Pokemon>(url, pokemon);
+  }
+  getOrToggleBattleTeam(pokemon: Pokemon): Observable<Pokemon> {
+    const url = `${this.backendApiUrl}/pokemons/get_or_toggle_battle_team`
+    return this.http.post<Pokemon>(url, pokemon)
+  }
 }

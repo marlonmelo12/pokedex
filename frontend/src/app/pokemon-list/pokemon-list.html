@@ -3,41 +3,35 @@
 <main class="min-h-screen bg-gray-100">
   <div class="container mx-auto p-6">
     <h2 class="text-3xl font-bold mb-4">Pokémons Descobertos</h2>
-    
+
     <div class="mb-6 flex flex-wrap items-center gap-4">
-      
+
       <div class="flex-grow">
-        <input 
-          type="text" 
-          placeholder="Buscar por nome..."
-          [value]="nameFilter()"
-          (input)="onNameChanged($event)"
-          class="w-full px-4 py-2 border border-gray-300 rounded-full focus:outline-none focus:ring-2 focus:ring-orange-500"
-        />
+        <input type="text" placeholder="Buscar por nome..." [value]="nameFilter()" (input)="onNameChanged($event)"
+          class="w-full px-4 py-2 border border-gray-300 rounded-full focus:outline-none focus:ring-2 focus:ring-orange-500" />
       </div>
 
       <div>
-        <select 
-          (change)="onGenerationChanged($event)"
-          class="px-4 py-2 border border-gray-300 rounded-full focus:outline-none focus:ring-2 focus:ring-orange-500"
-        >
+        <select (change)="onGenerationChanged($event)"
+          class="px-4 py-2 border border-gray-300 rounded-full focus:outline-none focus:ring-2 focus:ring-orange-500">
           @for (gen of generations; track gen.value) {
-            <option [value]="gen.value">{{ gen.label }}</option>
+          <option [value]="gen.value">{{ gen.label }}</option>
           }
         </select>
       </div>
 
     </div>
 
-    <app-filter-buttons 
-      [filterOptions]="filterTypes" 
-      [typeColorMap]="typeColorMap" 
+    <app-filter-buttons [filterOptions]="filterTypes" [typeColorMap]="typeColorMap"
       (filterSelected)="onTypeChanged($event)">
     </app-filter-buttons>
 
     <div class="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-6">
       @for (p of displayedPokemons; track p.id){
-        <app-pokemon-card [pokemon]="p" [typeColorMap]="typeColorMap"></app-pokemon-card>
+      <div (click)="onCardClick(p.id)" class="cursor-pointer">
+        <app-pokemon-card [pokemon]="p" [typeColorMap]="typeColorMap" [isExpanded]="expandedPokemonId() === p.id">
+        </app-pokemon-card>
+      </div>
       }
     </div>
   </div>

@@ -26,6 +26,8 @@ export class PokemonListComponent implements OnInit {
   public generationFilter = signal<string>('all');
   public typeFilter = signal<string>('Todos os Tipos');
 
+  public expandedPokemonId = signal<number | null>(null);
+
   public filterTypes: string[] = ['Todos os Tipos'];
   public typeColorMap: { [key: string]: string } = {
     'Grass': 'green',
@@ -121,5 +123,46 @@ export class PokemonListComponent implements OnInit {
     if (id <= 251) return 2;
     if (id <= 386) return 3;
     return 0;
+  }
+  public onFavoriteToggle(pokemon: Pokemon): void{
+    pokemon.favorito = !pokemon.favorito;
+
+    this.pokemonService.getOrToggleFavorite(pokemon).subscribe({
+      next: (updatedPokemonFromServer) => {
+        const index = this.allPokemons.findIndex(p => p.codigo === updatedPokemonFromServer.codigo)
+        if(index > -1){
+          this.allPokemons[index] = updatedPokemonFromServer;
+        }
+      },
+      error: (err) => {
+        console.error("Falha ao atualizar");
+        pokemon.favorito = !pokemon.favorito;
+      }
+    })
+  }
+
+  public onBattleTeamToggle(pokemon: Pokemon): void{
+    pokemon.grupo_batalha = !pokemon.grupo_batalha;
+
+    this.pokemonService.getOrToggleBattleTeam(pokemon).subscribe({
+      next: (updatedPokemon) =>{
+        const index = this.allPokemons.findIndex(p => p.codigo === updatedPokemon.codigo)
+        if(index > -1){
+          this.allPokemons[index] = updatedPokemon;
+        }
+      },
+      error: (err) =>{
+        pokemon.grupo_batalha = !pokemon.grupo_batalha;
+        console.error("Erro ao atualizar")
+      }
+    })
+  }
+
+  public onCardClick(pokemonId: number): void{
+    if(this.expandedPokemonId() === pokemonId){
+      this.expandedPokemonId.set(null);
+    }else{
+      this.expandedPokemonId.set(pokemonId);
+    }
   }
 }

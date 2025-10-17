@@ -23,6 +23,9 @@ export interface Pokemon {
   codigo: string;
   favorito: boolean;
   grupo_batalha: boolean;
+
+  description: string;
+  abilities: string[];
 }
 
 // A resposta paginada (esta parte já estava correta)
